@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   get "listing" => "products#listing"
   root to: "welcome#index"
   get "up" => "rails/health#show", as: :rails_health_check
+  post "new" => "registrations#create", as: :create_registration
 end
