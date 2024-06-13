@@ -1,15 +1,19 @@
 user = User.find_by(email: "store@example.com")
-if !user
-  user = User.new(
-    email: "store@example.com",
-    password: "123456",
-    password_confirmation: "123456"
-  )
-  user.save!
+
+admin = User.find_or_create_by!(email: "admin@example.com") do |user|
+  user.password = "123456"
+  user.password_confirmation = "123456"
+  user.role = :admin
 end
 
 ["Orange Curry", "Belly King"].each do |store|
-  Store.find_or_create_by!(name: store, user: user)
+  seller_email = "#{store.split.map(&:downcase).join(".")}@example.com"
+  seller = User.find_or_create_by!(email: seller_email) do |user|
+    user.password = "123456"
+    user.password_confirmation = "123456"
+    user.role = :seller
+  end
+  Store.find_or_create_by!(name: store, user: seller)
 end
 
 {
