@@ -7,6 +7,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_user
+    if request.format == Mime[:json]
+      @user
+    else
+      super
+    end
+  end
+  
   private
 
   def check_token!
@@ -17,11 +25,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_user
-    if request.format == Mime[:json]
-      @user
-    else
-      super
-    end
-  end
 end

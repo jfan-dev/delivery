@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  class InvalidToken < StandardError; end
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
