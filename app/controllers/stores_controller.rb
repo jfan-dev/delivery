@@ -4,7 +4,11 @@ class StoresController < ApplicationController
 
   # GET /stores or /stores.json
   def index
-    @stores = Store.all
+    if current_user.admin?
+      @stores = Store.all
+    else
+      @stores = Store.where(user: current_user)
+    end
   end
 
   # POST /stores or /stores.json
