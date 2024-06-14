@@ -6,6 +6,21 @@ admin = User.find_or_create_by!(email: "admin@example.com") do |user|
   user.role = :admin
 end
 
+["Go Jira", "Pan Dah"].each do |buyer|
+  email = buyer.split.map { |s| s.downcase }.join(".")
+  user = User.find_by(email: email)
+  
+  if !user
+    user = User.new(
+      email: "#{email}@example.com",
+      password: "123456",
+      password_confirmation: "123456",
+      role: :buyer
+    )
+    user.save!
+  end
+end
+
 ["Orange Curry", "Belly King"].each do |store|
   seller_email = "#{store.split.map(&:downcase).join(".")}@example.com"
   seller = User.find_or_create_by!(email: seller_email) do |user|
