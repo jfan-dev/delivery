@@ -14,7 +14,9 @@ class StoresController < ApplicationController
   # POST /stores or /stores.json
   def create
     @store = Store.new(store_params)
-    @store.user = current_user
+    if !current_user.admin?
+      @store.user = current_user
+    end
 
     respond_to do |format|
       if @store.save
@@ -34,6 +36,11 @@ class StoresController < ApplicationController
   end
 
   def store_params
-    params.require(:store).permit(:name)
+    required = params.require(:store)
+    if current_user.admin?
+      required.permit(:name, :user_id)
+    else
+      required.permit(:name)
+    end
   end
 end
