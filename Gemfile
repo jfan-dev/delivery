@@ -65,3 +65,5 @@ gem "jwt", "~> 2.8"
 gem 'rack-cors'
 
 gem "state_machines-activerecord", "~> 0.9.0"
+
+gem "kaminari", "~> 1.2"
