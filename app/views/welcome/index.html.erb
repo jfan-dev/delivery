@@ -1,9 +1,15 @@
 <h1>Welcome to Delivery!</h1>
 
-<p style="color: green"><%= notice %></p>
+<p style="color: green"><%= notice %>
 
 <% if current_user %>
-  <p>Logged in as <strong><%= current_user.email %></strong></p>
+  <p>Logged in as <strong><%= current_user.email %></strong></p><br/>
+  <%= button_to "Go to Stores", stores_path, method: :get %><br/>
+
+  <% if current_user.admin? %>
+    <%= button_to "User List", user_listing_path, method: :get %><br/>
+  <% end %>
+  
   <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
 <% else %>
   <%= link_to "Sign in", new_user_session_path %>
