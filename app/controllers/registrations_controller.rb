@@ -26,6 +26,14 @@ class RegistrationsController < ApplicationController
     end
   end
 
+  def user_listing
+    if params[:role].present?
+      @users = User.where(role: params[:role])
+    else
+      @users = User.all
+    end
+  end
+
   def me
     render json: { id: current_user.id, email: current_user.email }
   end
