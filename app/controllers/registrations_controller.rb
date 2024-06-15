@@ -5,6 +5,8 @@ class RegistrationsController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.role = current_credential.access
+
     if @user.save
       render json: { email: @user.email }
     else
@@ -29,7 +31,7 @@ class RegistrationsController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :role)
+    params.require(:user).permit(:email, :password, :password_confirmation)
   end
 
   def sign_in_params
