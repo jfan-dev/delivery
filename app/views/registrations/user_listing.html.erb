@@ -1,0 +1,36 @@
+
+
+<div class="container">
+  <div class="header">
+    <h1>User Listing</h1>
+  </div>
+
+  <%= form_with(url: user_listing_path, method: :get, local: true) do %>
+    <%= label_tag :role, "Filter by Role", style: "display: block" %>
+    <%= select_tag :role, options_for_select(User.roles.keys.map { |role| [role.humanize, role] }, params[:role]), prompt: "Select a role..." %>
+    <%= submit_tag "Filter", class: "btn btn-primary" %>
+  <% end %>
+
+  <hr />
+
+  <div class="user-list">
+    <% @users.each do |user| %>
+      <div class="user-item">
+        <p><strong>User ID:</strong> <%= user.id %></p>
+        <div class="role-and-form">
+          <p><strong>Email:</strong> <%= user.email %></p>
+          <p><strong>Role:</strong> <%= user.role %></p>
+          <div class="change-role">
+            <%= form_with(url: change_role_registration_path(user), method: :patch, local: true) do %>
+              <%= label_tag :role, "Select Role", style: "display: block" %>
+              <%= select_tag :role, options_for_select(User.roles.keys.map { |role| [role.humanize, role] }), prompt: "Select a role..." %>
+              <%= hidden_field_tag :id, user.id %>
+              <%= submit_tag "Change Role", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <hr />
+    <% end %>
+  </div>
+</div>
