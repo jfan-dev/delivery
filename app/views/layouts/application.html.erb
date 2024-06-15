@@ -12,5 +12,10 @@
 
   <body>
     <%= yield %>
+
+    <div>
+      <%= link_to "English", url_for(locale: :en) %> |
+      <%= link_to "Portuguese", url_for(locale: :pt) %>
+    </div>
   </body>
 </html>
