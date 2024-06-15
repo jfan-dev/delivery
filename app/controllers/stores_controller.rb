@@ -1,5 +1,6 @@
 class StoresController < ApplicationController
-  before_action :authenticate_user!
+  skip_forgery_protection only: %i[create update]
+  before_action :authenticate!
   before_action :set_store, only: %i[ show edit update destroy ]
 
   # GET /stores or /stores.json
@@ -14,16 +15,14 @@ class StoresController < ApplicationController
   # POST /stores or /stores.json
   def create
     @store = Store.new(store_params)
-    if !current_user.admin?
-      @store.user = current_user
-    end
+    @store.user = current_user unless current_user.admin?
 
     respond_to do |format|
       if @store.save
-        format.html { redirect_to @store, notice: 'Store was successfully created.' }
+        format.html { redirect_to store_url(@store), notice: "Store was successfully created." }
         format.json { render :show, status: :created, location: @store }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @store.errors, status: :unprocessable_entity }
       end
     end
