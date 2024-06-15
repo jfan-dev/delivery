@@ -34,4 +34,8 @@ class ApplicationController < ActionController::Base
     is_buyer = (current_user && current_user.buyer?) && current_credential.buyer?
     render json: {message: "Not authorized"}, status: 401 unless is_buyer
   end
+
+  def set_locale!
+    I18n.locale = params[:locale] if params[:locale].present?
+  end
 end
