@@ -6,6 +6,16 @@ class Order < ApplicationRecord
 
   validate :buyer_role
 
+  def accept
+    if self.state == :created
+      update! state: :accepted
+      
+      # Send a Notification TODO
+    else
+      raise "Can't change to `:accepted` from #{self.state}"
+    end
+  end
+  
   private
 
   def buyer_role
