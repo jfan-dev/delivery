@@ -1,0 +1,15 @@
+<h1>Editing store</h1>
+
+<%= render "form", store: @store %>
+
+<br>
+<%= link_to 'Disable My Account', disable_user_store_path(@store),
+            method: :patch,
+            data: { confirm: 'Are you sure you want to disable your account?' },
+            class: 'btn btn-warning' %>
+
+                  
+<div>
+  <%= link_to "Show this store", @store %> |
+  <%= link_to "Back to stores", stores_path %>
+</div>

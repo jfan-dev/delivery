@@ -1,0 +1,32 @@
+<p class="notice"><%= notice %></p>
+
+<%= render @store %>
+
+<h2>Products</h2>
+<div class="products">
+  <% @products.each do |product| %>
+    <div class="product">
+      <p><strong>Title:</strong> <%= product.title %></p>
+      <p><strong>Price:</strong> <%= number_to_currency(product.price) %></p>
+      <%= form_with url: add_item_cart_path(product_id: product.id), method: :post do |form| %>
+        <%= form.label :quantity %>
+        <%= form.number_field :quantity, value: 1, min: 1 %>
+        <%= form.submit 'Add to Cart' %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="pagination">
+  <%= paginate @products, theme: 'custom' %>
+</div>
+
+<hr class="separator" />
+<br/>
+
+<div class="store-links">
+  <%= link_to "Edit this store", edit_store_path(@store), class: "edit-link" %> |
+  <%= link_to "Back to stores", stores_path, class: "back-link" %>
+
+  <%= button_to "Destroy this store", @store, method: :delete, class: "destroy-button" %>
+</div>
