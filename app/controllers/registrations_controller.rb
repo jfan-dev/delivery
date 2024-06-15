@@ -15,12 +15,14 @@ class RegistrationsController < ApplicationController
   end
 
   def sign_in
-    user = User.find_by(email: sign_in_params[:email])
-    if user&.valid_password?(sign_in_params[:password])
+    access = current_credential.access
+    user = User.where(role: access).find_by(email: sign_in_params[:email])
+
+    if !user || !user.valid_password?(sign_in_params[:password])
+      render json: { message: "Nope!" }, status: 401
+    else
       token = User.token_for(user)
       render json: { email: user.email, token: token }
-    else
-      render json: { message: "Nope!" }, status: 401
     end
   end
 
