@@ -1,4 +1,6 @@
 class StoresController < ApplicationController
+  include ActionController::Live
+
   skip_forgery_protection only: %i[create update]
   before_action :authenticate!
   before_action :set_store, only: %i[ show edit update destroy ]
@@ -70,6 +72,28 @@ class StoresController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def new_order
+    response.headers["Content-Type"] = "text/event-stream"
+    sse = SSE.new(response.stream, retry: 300, event: "waiting-orders")
+
+    EventMachine.run do
+      EventMachine::PeriodicTimer.new(3) do
+        order = Order.last
+        if order
+          message = { time: Time.now, order: order }
+          sse.write(message, event: "new-order")
+        else
+          sse.write({ message: "No new orders" }, event: "no-order")
+        end
+      end
+    end
+  rescue IOError, ActionController::Live::ClientDisconnected
+    sse.close
+  ensure
+    sse.close
+  end
+end
 
   private
 
