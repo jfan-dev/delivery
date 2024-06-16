@@ -71,3 +71,5 @@ gem "kaminari", "~> 1.2"
 gem "faraday", "~> 2.9"
 
 gem "sidekiq", "~> 7.2"
+
+gem "eventmachine", "~> 1.2"

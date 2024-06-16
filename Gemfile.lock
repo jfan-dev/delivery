@@ -101,6 +101,7 @@ GEM
     diff-lcs (1.5.1)
     drb (2.2.1)
     erubi (1.13.0)
+    eventmachine (1.2.7)
     faker (3.4.1)
       i18n (>= 1.8.11, < 2)
     faraday (2.9.1)
@@ -311,6 +312,7 @@ DEPENDENCIES
   bullet
   debug
   devise (~> 4.9)
+  eventmachine (~> 1.2)
   faker
   faraday (~> 2.9)
   importmap-rails
