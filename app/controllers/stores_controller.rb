@@ -93,7 +93,7 @@ class StoresController < ApplicationController
   ensure
     sse.close
   end
-end
+
 
   private
 
