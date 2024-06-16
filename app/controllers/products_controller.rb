@@ -12,6 +12,11 @@ class ProductsController < ApplicationController
 
   def index
     respond_to do |format|
+      @products = Product.where(store_id: params[:store_id]).order(:title).page(params.fetch(:page, 1))
+      
+      format.html do
+        render :index
+      end
       format.json do
         if buyer?
           page = params.fetch(:page, 1)
