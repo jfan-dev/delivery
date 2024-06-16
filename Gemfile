@@ -69,3 +69,5 @@ gem "state_machines-activerecord", "~> 0.9.0"
 gem "kaminari", "~> 1.2"
 
 gem "faraday", "~> 2.9"
+
+gem "sidekiq", "~> 7.2"
