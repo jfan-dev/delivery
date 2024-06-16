@@ -23,4 +23,4 @@ Things you may want to cover:
 
 * ...
 
-versao 0.0.4 tudo funcionando?.
+versao 0.0.5 tudo funcionando.
