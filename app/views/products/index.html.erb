@@ -1,0 +1,22 @@
+<div id="products-list">
+  <% if params[:page].present? %>
+    <div class="pagination">
+      <p>Current Page: <%= @products.current_page %></p>
+      <p>Per Page: <%= @products.limit_value %></p>
+      <p>Total Pages: <%= @products.total_pages %></p>
+      <p>Total Count: <%= @products.total_count %></p>
+      <p>Previous Page: <%= @products.current_page > 1 ? @products.current_page - 1 : 'N/A' %></p>
+      <p>Next Page: <%= @products.current_page == @products.total_pages ? 'N/A' : @products.current_page + 1 %></p>
+    </div>
+  <% end %>
+
+  <div class="products">
+    <% @products.each do |product| %>
+      <div class="product">
+        <p>ID: <%= product.id %></p>
+        <p>Title: <%= product.title %></p>
+        <p>Price: <%= number_to_currency(product.price) %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
