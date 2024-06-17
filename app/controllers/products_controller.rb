@@ -29,10 +29,25 @@ class ProductsController < ApplicationController
     end
   end
 
+  def create
+    @store = Store.find(params[:store_id])
+    @product = @store.products.new(product_params)
+
+    if @product.save
+      render json: { message: "Product created successfully" }, status: :created
+    else
+      render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def fetch_products
     Product.where(store_id: params[:store_id]).order(:title).page(params.fetch(:page, 1))
+  end
+
+  def product_params
+    params.require(:product).permit(:title, :price)
   end
 
   def authorized_user?
