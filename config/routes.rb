@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   }
   
   resources :stores do
-    resources :products, only: [:index]
+    resources :products, only: [:index, :create]
     get "/orders/new" => "stores#new_order"
   end
   
