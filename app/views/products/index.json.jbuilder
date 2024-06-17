@@ -14,6 +14,11 @@ json.result do
     end
   end
 
+  json.store do
+    json.id @store.id
+    json.name @store.name
+  end
+
   json.products do
     json.array! @products do |product|
       json.extract! product, :id, :title
