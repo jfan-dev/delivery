@@ -20,6 +20,7 @@ class ProductsController < ApplicationController
       format.json do
         if buyer?
           page = params.fetch(:page, 1)
+          @store = Store.find(params[:store_id])
           @products = Product
             .where(store_id: params[:store_id])
             .order(:title)
