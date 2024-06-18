@@ -21,8 +21,15 @@ json.result do
 
   json.products do
     json.array! @products do |product|
-      json.extract! product, :id, :title
-      json.price number_to_currency(product.price)
+      json.extract! product, :id, :title, :price, :enabled
+    end
+  end
+
+  if @disabled_products
+    json.disabled_products do
+      json.array! @disabled_products do |product|
+        json.extract! product, :id, :title, :price, :enabled
+      end
     end
   end
 end
