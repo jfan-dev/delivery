@@ -40,9 +40,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :cart, only: [:show] do
-    post 'add_item/:product_id', to: 'carts#add_item', as: 'add_item'
-    delete 'remove_item/:cart_item_id', to: 'carts#remove_item', as: 'remove_item'
+  resources :carts, only: [:show] do
+    collection do
+      post :add_item
+      delete :remove_item
+      post :checkout
+    end
   end
 
   resources :orders, only: [:create, :index, :show]

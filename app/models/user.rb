@@ -7,6 +7,8 @@ class User < ApplicationRecord
   enum role: { admin: 0, seller: 1, buyer: 2 }
   has_many :stores
 
+  has_many :orders, foreign_key: :buyer_id, class_name: 'Order'
+
   def self.token_for(user)
     jwt_headers = { exp: 1.hour.from_now.to_i }
     payload = { id: user.id, email: user.email, role: user.role }

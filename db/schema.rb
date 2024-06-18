@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_17_222552) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_18_185822) do
   create_table "credentials", force: :cascade do |t|
     t.integer "access"
     t.string "key", null: false
@@ -25,6 +25,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_17_222552) do
     t.decimal "price", precision: 8, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "quantity"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["product_id"], name: "index_order_items_on_product_id"
   end
@@ -46,6 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_17_222552) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "enabled"
+    t.string "image"
     t.index ["store_id"], name: "index_products_on_store_id"
   end
 
