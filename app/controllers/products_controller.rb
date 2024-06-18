@@ -1,4 +1,3 @@
-# app/controllers/products_controller.rb
 class ProductsController < ApplicationController
   before_action :authenticate!
   before_action :set_locale!
@@ -84,11 +83,30 @@ class ProductsController < ApplicationController
   private
 
   def fetch_products
-    Product.where(store_id: params[:store_id], enabled: true).order(:title).page(params.fetch(:page, 1))
+    products = Product.where(store_id: params[:store_id], enabled: true)
+    products = apply_sorting(products)
+    products.order(:title).page(params.fetch(:page, 1))
   end
 
   def fetch_disabled_products
-    Product.where(store_id: params[:store_id], enabled: false).order(:title).page(params.fetch(:disabled_page, 1)).per(4)
+    products = Product.where(store_id: params[:store_id], enabled: false)
+    products = apply_sorting(products)
+    products.order(:title).page(params.fetch(:disabled_page, 1)).per(4)
+  end
+
+  def apply_sorting(products)
+    case params[:sort_by]
+    when 'name_asc'
+      products.order(:title)
+    when 'name_desc'
+      products.order(title: :desc)
+    when 'price_low_high'
+      products.order(:price)
+    when 'price_high_low'
+      products.order(price: :desc)
+    else
+      products
+    end
   end
 
   def authorized_user?
