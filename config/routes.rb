@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   }
   
   resources :stores do
-    resources :products, only: [:index, :create, :destroy] do
+    resources :products, only: [:index, :create, :update, :destroy] do
       member do
         patch 'enable'
         patch 'disable'
