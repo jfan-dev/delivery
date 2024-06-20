@@ -24,7 +24,7 @@ Usuário [ Consumy ](https://github.com/jfan-dev/consumy "Named link title") e V
       - Receber os pedidos dos compradores e redirecionar para a aplicação dos vendedores.
    
 
-![](app/assets/images/screenshots/screenshot-short.png)
+![](app/assets/images/screenshots/screenshot-short.jpg)
 
 ## 🌐 Pré-requisitos para rodar o projeto
 
