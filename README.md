@@ -44,6 +44,9 @@ Usuário [ Consumy ](https://github.com/jfan-dev/consumy "Named link title") e V
 ```bash
 # Inicie o backend com o comando
 > Rails server
+# Email e Senha do usuário admin:
+#admin@example.com
+#123456
 ```
 
 ### Executando o Frontend
