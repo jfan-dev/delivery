@@ -3,7 +3,7 @@ class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :add_item, :remove_item, :checkout]
 
   def show
-    render json: @cart, include: :order_items
+    render json: @cart.as_json(include: { order_items: { include: :product } })
   end
 
   def add_item

@@ -15,9 +15,11 @@
         </div>
       
         <% if devise_mapping.rememberable? %>
-          <div class="field">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
+          <div class="field remember-me">
+            <div class="checkbox-container">
+              <%= f.label :remember_me %>
+              <%= f.check_box :remember_me %>
+            </div>
           </div>
         <% end %>
       
@@ -30,7 +32,7 @@
   </div>
 
   <div class="login-image">
-    <img src="../../../assets/login-admin1.jpg" alt="Godzilla eating">
+    <img src="../../../assets/admin-img.jpg" alt="Godzilla eating">
   </div>
 
 </div>
@@ -78,6 +80,7 @@
     margin-bottom: 5px;
     font-weight: bold;
     color: #555;
+    width: 32%;
   }
 
   .login-form input {
@@ -103,6 +106,17 @@
     background-color: var(--orange);
   }
 
+  .remember-me .checkbox-container {
+    display: flex;
+    align-items: center;
+    
+  }
+
+  .remember-me .checkbox-container input[type='checkbox'] {
+    margin-bottom: 0px;
+    margin-left: 5px;
+    width: auto;
+  }
 
   @media (max-width: 650px) {
     .login-image {

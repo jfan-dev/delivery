@@ -52,31 +52,37 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @store = Store.find(params[:store_id])
-    @product = @store.products.new(product_params)
+    if seller?
+      @store = Store.find(params[:store_id])
+      @product = @store.products.new(product_params)
 
-    if @product.save
-      render json: { message: "Product created successfully" }, status: :created
-    else
-      render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+      if @product.save
+        render json: { message: "Product created successfully" }, status: :created
+      else
+        render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+      end
     end
   end
 
   def update
-    @product = Product.find(params[:id])
-    if @product.update(product_params)
-      render json: { message: "Product updated successfully" }, status: :ok
-    else
-      render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+    if seller?
+      @product = Product.find(params[:id])
+      if @product.update(product_params)
+        render json: { message: "Product updated successfully" }, status: :ok
+      else
+        render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+      end
     end
   end
 
   def destroy
-    @product = Product.find(params[:id])
-    if @product.destroy
-      render json: { message: "Product deleted successfully" }, status: :ok
-    else
-      render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+    if seller?
+      @product = Product.find(params[:id])
+      if @product.destroy
+        render json: { message: "Product deleted successfully" }, status: :ok
+      else
+        render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+      end
     end
   end
 
@@ -89,9 +95,11 @@ class ProductsController < ApplicationController
   end
 
   def fetch_disabled_products
-    products = Product.where(store_id: params[:store_id], enabled: false)
-    products = apply_sorting(products)
-    products.order(:title).page(params.fetch(:disabled_page, 1)).per(4)
+    if seller?
+      products = Product.where(store_id: params[:store_id], enabled: false)
+      products = apply_sorting(products)
+      products.order(:title).page(params.fetch(:disabled_page, 1)).per(4)
+    end
   end
 
   def apply_sorting(products)
