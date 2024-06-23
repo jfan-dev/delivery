@@ -1,5 +1,3 @@
-user = User.find_by(email: "store@example.com")
-
 admin = User.find_or_create_by!(email: "admin@example.com") do |user|
   user.password = "123456"
   user.password_confirmation = "123456"
@@ -21,22 +19,35 @@ end
   end
 end
 
-["Orange Curry", "Belly King"].each do |store|
+store_names = [
+  "Fresh Bites", "Urban Grills", "Savory Delights", "Flavor Feast", "Gourmet Palace",
+  "Taste Haven", "Epicurean Treats", "Heavenly Bites", "Yummy Yards", "Culinary Crave",
+  "Delish Hub", "Bistro Bites", "Cuisine Magic", "Elite Eats", "Feast Paradise",
+  "Grill Masters", "Snack Corner", "Divine Dine", "Master Meals", "Nibble Corner",
+  "Orange Curry", "Belly King"
+]
+
+products = [
+  "Chicken Parmesan", "Seafood Paella", "Spicy Tuna Roll", "Grilled Salmon", "Pasta Primavera",
+  "Truffle Risotto", "Greek Salad", "Pork Schnitzel", "Lamb Chops", "Margherita Pizza",
+  "Fettuccine Alfredo", "Fish Tacos", "Tom Yum Soup", "Steak Diane", "Duck Confit",
+  "Baby Back Ribs", "Moussaka", "Chow Mein", "Spring Rolls", "Baked Trout"
+]
+
+store_names.each do |store|
   seller_email = "#{store.split.map(&:downcase).join(".")}@example.com"
   seller = User.find_or_create_by!(email: seller_email) do |user|
     user.password = "123456"
     user.password_confirmation = "123456"
     user.role = :seller
   end
-  Store.find_or_create_by!(name: store, user: seller)
-end
 
-{
-  "Orange Curry" => ["Massaman Curry", "Risotto with Seafood", "Tuna Sashimi", "Fish and Chips", "Pasta Carbonara"],
-  "Belly King" => ["Mushroom Risotto", "Caesar Salad", "Mushroom Risotto", "Tuna Sashimi", "Chicken Milanese"]
-}.each do |store_name, dishes|
-  store = Store.find_by(name: store_name)
-  dishes.each do |dish|
-    Product.find_or_create_by!(title: dish, store: store)
+  store_record = Store.find_or_create_by!(name: store, user: seller)
+
+  products.each do |product|
+    price = rand(5.99..49.99).round(2)
+    Product.find_or_create_by!(title: product, store: store_record) do |p|
+      p.price = price
+    end
   end
 end
