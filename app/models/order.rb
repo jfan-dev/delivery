@@ -12,10 +12,10 @@ class Order < ApplicationRecord
     end
   end
   
-  def add_product(product, quantity = 1)
+  def add_product(product, amount = 1)
     order_item = order_items.find_or_initialize_by(product: product)
-    order_item.quantity ||= 0
-    order_item.quantity += quantity
+    order_item.amount ||= 0
+    order_item.amount += amount
     order_item.price = product.price
     order_item.save
   end
@@ -29,6 +29,8 @@ class Order < ApplicationRecord
     save
   end
 
+  accepts_nested_attributes_for :order_items
+  
   private
 
   def buyer_role
